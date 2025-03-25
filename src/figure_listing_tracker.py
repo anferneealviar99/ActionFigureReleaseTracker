@@ -17,7 +17,7 @@ def update_widget():
     
     for fig in figures:
         print(fig)
-        lbl = ttk.Label(frame, text=f"{fig['name']} - {fig['price']} ({fig['store']}))", cursor="hand2", wraplength=300)
+        lbl = ttk.Label(frame, text=f"{fig['name']} - {fig['price']} ({fig['store']})", cursor="hand2", wraplength=300)
         lbl.pack(anchor="w", padx=5, pady=2)
         lbl.bind("<Button-1>", lambda e, url=fig['link']: open_link(url))
         
