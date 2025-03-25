@@ -23,7 +23,7 @@ def scrape(link_url, shop_url, shop_name):
     figures = []
     
     if shop_name is SHOP["green_rock"]:
-        response = requests.get(link_url, header=HEADERS)
+        response = requests.get(link_url, headers=HEADERS)
         soup = bs(response.text, "html.parser")
         products = soup.find_all("div", class_="product-details")
     
@@ -33,29 +33,35 @@ def scrape(link_url, shop_url, shop_name):
             link = shop_url + product.find("a")["href"]
 
             if link_url is LINK_URLS["green_rock_dc"]:
-                figures.append({'line': 'McFarlane DC',
+                figures.append({'store': shop_name,
+                                'line': 'McFarlane DC',
                                 'name': name,
                                 'price': price,
                                 'link': link})
                 
             elif link_url is LINK_URLS["green_rock_marvel"]:
-                figures.append({'line': 'Marvel Legends',
+                figures.append({'store': shop_name,
+                                'line': 'Marvel Legends',
                                 'name': name,
                                 'price': price,
                                 'link': link})
                 
             elif link_url is LINK_URLS["green_rock_transformers"]:
-                figures.append({'line': 'Transformers',
+                figures.append({'store': shop_name,
+                                'line': 'Transformers',
                                 'name': name,
                                 'price': price,
                                 'link': link})
 
-    
     return figures
 
 def get_all_figures():
-    return(
-        scrape(LINK_URLS["green_rock_dc"], SHOP_URLS["greenrock"], SHOP["green_rock"]) +
-        scrape(LINK_URLS["green_rock_marvel"], SHOP_URLS["green_rock"], SHOP["green_rock"]) +
-        scrape(LINK_URLS["green_rock_transformers"], SHOP_URLS["green_rock"], SHOP["green_rock"])
-    )
+    figures = []
+    
+    figures.extend(scrape(LINK_URLS["green_rock_dc"], SHOP_URLS["green_rock"], SHOP["green_rock"]))
+    # figures.append(scrape(LINK_URLS["green_rock_marvel"], SHOP_URLS["green_rock"], SHOP["green_rock"]))
+    # figures.append(scrape(LINK_URLS["green_rock_transformers"], SHOP_URLS["green_rock"], SHOP["green_rock"]))
+    
+    print(figures)
+    
+    return figures
