@@ -62,6 +62,4 @@ def get_all_figures():
     figures.extend(scrape(LINK_URLS["green_rock_marvel"], SHOP_URLS["green_rock"], SHOP["green_rock"]))
     figures.extend(scrape(LINK_URLS["green_rock_transformers"], SHOP_URLS["green_rock"], SHOP["green_rock"]))
     
-    print(figures)
-    
     return figures
