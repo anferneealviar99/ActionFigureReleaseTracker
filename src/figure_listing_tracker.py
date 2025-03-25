@@ -66,9 +66,8 @@ class ScrollableFrame(tk.Frame):
 # Create GUI Window
 root=tk.Tk()
 root.title("Action Figure Listing Tracker")
-root.geometry("500x500")
+root.geometry("800x600")
 root.attributes("-topmost", True)
-root.resizable(False, False)
 
 # Create notebook
 notebook = ttk.Notebook(root)
