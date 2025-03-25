@@ -17,6 +17,7 @@ SHOP = {
     "culture_shock": "Culture Shock Collectables",
     "popcultcha": "Popcultcha",
     "zing": "ZING Pop Culture",
+    "angel_grove": "Angel Grove Collectibles"
 }
 
 def scrape(link_url, shop_url, shop_name):
@@ -52,6 +53,18 @@ def scrape(link_url, shop_url, shop_name):
                                 'name': name,
                                 'price': price,
                                 'link': link})
+    
+    elif shop_name is SHOP["culture_shock"]:
+        print("CULTURE SHOCK")
+    
+    elif shop_name is SHOP["popcultcha"]:
+        print("POPCULTCHA")
+    
+    elif shop_name is SHOP["zing"]:
+        print("ZING")
+    
+    elif shop_name is SHOP["angel_grove"]:
+        print("ANGEL GROVE")
 
     return figures
 
