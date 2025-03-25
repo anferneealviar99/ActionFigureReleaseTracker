@@ -42,6 +42,26 @@ def update_widget():
             
     root.after(3600000, update_widget)
     
+class ScrollableFrame(tk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.canvas = tk.Canvas(self)
+        self.scrollable_frame = tk.Frame(self.canvas)
+        self.scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.canvas.create_window((0,0), window=self.scrollable_frame, anchor="nw")
+        self.scrollbar.pack(side="right", fill="y")
+        
+        self.update_scrollregion()
+        
+    def update_scrollregion(self):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        
+    def add_widget(self, widget):
+        widget.pack(anchor="w", padx=5, pady=2)
+    
 
 # Create GUI Window
 root=tk.Tk()
@@ -63,35 +83,15 @@ notebook.add(tab_mcfarlane_dc, text="McFarlane DC")
 notebook.add(tab_marvel_legends, text="Marvel Legends")
 notebook.add(tab_transformers, text="Transformers")
 
-notebook.pack(expand=True, fill="both")
-
-# Create a canvas for each tab to make it scrollable
-tab_mcfarlane_dc_canvas = tk.Canvas(tab_mcfarlane_dc)
-tab_mcfarlane_dc_frame = tk.Frame(tab_mcfarlane_dc_canvas)
-tab_mcfarlane_dc_scrollbar = ttk.Scrollbar(tab_mcfarlane_dc, orient="vertical", command=tab_mcfarlane_dc_canvas.yview)
-tab_mcfarlane_dc_canvas.configure(yscrollcommand=tab_mcfarlane_dc_scrollbar.set)
-tab_mcfarlane_dc_canvas.pack(side="left", fill="both", expand=True)
-tab_mcfarlane_dc_canvas.create_window((0, 0), window=tab_mcfarlane_dc_frame, anchor="nw")
-tab_mcfarlane_dc_scrollbar.pack(side="right", fill="y")
-
-# Repeat for other tabs
-tab_marvel_legends_canvas = tk.Canvas(tab_marvel_legends)
-tab_marvel_legends_frame = tk.Frame(tab_marvel_legends_canvas)
-tab_marvel_legends_scrollbar = ttk.Scrollbar(tab_marvel_legends, orient="vertical", command=tab_marvel_legends_canvas.yview)
-tab_marvel_legends_canvas.configure(yscrollcommand=tab_marvel_legends_scrollbar.set)
-tab_marvel_legends_canvas.pack(side="left", fill="both", expand=True)
-tab_marvel_legends_canvas.create_window((0, 0), window=tab_marvel_legends_frame, anchor="nw")
-tab_marvel_legends_scrollbar.pack(side="right", fill="y")
-
-tab_transformers_canvas = tk.Canvas(tab_transformers)
-tab_transformers_frame = tk.Frame(tab_transformers_canvas)
-tab_transformers_scrollbar = ttk.Scrollbar(tab_transformers, orient="vertical", command=tab_transformers_canvas.yview)
-tab_transformers_canvas.configure(yscrollcommand=tab_transformers_scrollbar.set)
-tab_transformers_canvas.pack(side="left", fill="both", expand=True)
-tab_transformers_canvas.create_window((0, 0), window=tab_transformers_frame, anchor="nw")
-tab_transformers_scrollbar.pack(side="right", fill="y")
+mcfarlane_dc_scrollable = ScrollableFrame(tab_mcfarlane_dc)
+marvel_legends_scrollable = ScrollableFrame(tab_marvel_legends)
+transformers_scrollable = ScrollableFrame(tab_transformers)
 
 # Pack the notebook (tabs)
+mcfarlane_dc_scrollable.pack(fill="both", expand=True)
+marvel_legends_scrollable.pack(fill="both", expand=True)
+transformers_scrollable.pack(fill="both", expand=True)
+
 notebook.pack(expand=True, fill="both")
 
 # Update the widget (load the figures)
