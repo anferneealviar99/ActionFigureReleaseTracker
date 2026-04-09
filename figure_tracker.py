@@ -1,5 +1,5 @@
 def show_menu():
-    print("===ACTION FIGURE RELEASE TRACKER===")
+    print("=== ACTION FIGURE RELEASE TRACKER ===")
     print("1. Add a figure")
     print("2. Show all figures")
     print("3. Update figures")
@@ -12,9 +12,9 @@ def main():
     while True:
         show_menu()
         
-        choice = input("Please choose an option (1-5):")
+        choice = input("Please choose an option (1-5): ")
         
-        match(choice):
+        match(int(choice)):
             case 1:
                 print("=== ADD A FIGURE ===")
             case 2:
