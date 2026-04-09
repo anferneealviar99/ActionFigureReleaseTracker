@@ -5,9 +5,7 @@ def show_menu():
     print("3. Update figures")
     print("4. Delete figures")
     print("5. Exit")
-        
-    
-    
+
 def main():
     while True:
         show_menu()
