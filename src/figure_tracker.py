@@ -70,8 +70,9 @@ def update_figures():
     fig_rows = rows[1:]
     total = len(fig_rows)
     
-    print("Which figure would you like to edit?")
     while True:
+        print("=== UPDATE FIGURES ===")
+        print("Which figure would you like to edit?")
         count = 1
         for row in fig_rows:
             print(f"{count}. {row[0]}")
@@ -226,7 +227,6 @@ def main():
                     print()
                     show_figures()
                 case 3:
-                    print("=== UPDATE FIGURES ===")
                     update_figures()
                 case 4:
                     print("=== DELETE FIGURES ===")
