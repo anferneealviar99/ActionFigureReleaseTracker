@@ -1,3 +1,63 @@
+import csv
+import os
+
+def add_figure():
+    figure_details = {}
+    
+    name = input("Figure Name: ")
+    figure_details["name"] = name
+    
+    release_date = input("Release Date: ")
+    figure_details["release_date"] = release_date
+    
+    tier = input("Tier: ")
+    figure_details["tier"] = tier
+    
+    figure_details["websites"] = {}
+    
+    while True:
+        # Allow to enter websites
+        print("Enter the store name and URL. Type 'finish' to exit this menu.")
+        store_name = input("Store Name: ")
+        
+        if store_name.lower() == "finish":
+            break
+        
+        if store_name.strip() == "":
+            print("Store name cannot be blank.")
+            continue
+        
+        store_url = input("URL: ")
+        
+        if store_url.strip() == "":
+            print("URL cannot be blank")
+            continue
+            
+        figure_details["websites"][store_name] = store_url
+    
+    websites_str = '; '.join([f"{store}: {url}" for store, url in figure_details["websites"].items()])
+    # Read existing data then write everything back to avoid overwrite
+    
+    try:
+        with open("figures.csv", 'r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+    except FileNotFoundError:
+        rows = []
+        
+    # If file is empty or has no header, add header
+    if not rows:
+        rows = [["Name", "Release Date", "Tier", "Websites"]]
+        
+    rows.append([figure_details["name"], figure_details["release_date"], figure_details["tier"], websites_str])
+    
+    with open("figures.csv", 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(rows)
+        
+    print(f"Added: {figure_details['name']}")
+    
+
 def show_menu():
     print("=== ACTION FIGURE RELEASE TRACKER ===")
     print("1. Add a figure")
@@ -15,6 +75,7 @@ def main():
         match(int(choice)):
             case 1:
                 print("=== ADD A FIGURE ===")
+                add_figure()
             case 2:
                 print("=== SHOW ALL FIGURES ===")
             case 3:
