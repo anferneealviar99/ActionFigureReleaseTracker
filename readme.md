@@ -4,19 +4,23 @@ This is a command-line action figure release tracker that can be used to manuall
 
 ## Fields
 Name: Name of the action figure
+
 Release Date: Prospective date of release (currently in Month Year format e.g., June 2026)
+
 Status: Leaked, Announced, Preorder, Released, Sold Out
+
 Tier: Personal preference
     
-    * Preorder Now: Preorder straightaway
+* Preorder Now: Preorder straightaway
     
-    * Watchlist: Wait until 2 weeks before prospective release
+* Watchlist: Wait until 2 weeks before prospective release
     
-    * Release Day: Buy on release day
+* Release Day: Buy on release day
     
-    * Wait and Watch: Wait for reviews of the figure
+* Wait and Watch: Wait for reviews of the figure
     
-    * Pass: Safe to pass
+* Pass: Safe to pass
+
 Stores: Stores and their URLs
 
 ## How To Use
