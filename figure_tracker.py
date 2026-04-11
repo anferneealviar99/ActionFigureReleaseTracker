@@ -2,7 +2,7 @@ import csv
 
 def save_all_figures(rows):
     
-    with open("figures.csv", "w") as file:
+    with open("figures.csv", "w", newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
     
@@ -23,8 +23,28 @@ def show_status_menu():
     print("5. Sold Out")
     print()
 
-def update_status():
-    pass
+def update_status(rows, option):
+    status_dict = {
+        1: "Leaked",
+        2: "Announced",
+        3: "Preorder",
+        4: "Released",
+        5: "Sold Out"
+    }
+    
+    while True:
+        show_status_menu()
+        status = input("What would you like to update the status to (1-5)? ")
+        status = int(status)
+        
+        if status not in status_dict.keys():
+            print("Please enter a valid option.")
+        else:
+            rows[option][2] = status_dict[status]
+            save_all_figures(rows)
+            break
+            
+        
 
 def show_tier_menu():
     pass
@@ -85,44 +105,7 @@ def update_figures():
                             pass
                         case 3:
                             print("== UPDATING STATUS == ")
-                            while True:
-                                show_status_menu()
-                                status = input("What status would you like to update this figure to? ")
-                            
-                                if status.isdigit is False:
-                                    print("Please enter a valid option.")
-                                else:
-                                    if int(status) > 5:
-                                        print("Please enter a valid option.")
-                                    else:
-                                        while True:
-                                            match(int(status)):
-                                                case 1:
-                                                    rows[int(option)][2] = "Leaked"
-                                                    break
-                                                case 2:
-                                                    rows[int(option)][2] = "Announced"
-                                                    break
-                                                case 3:
-                                                    rows[int(option)][2] = "Preorder"
-                                                    with open('figures.csv', 'w', newline='') as file:
-                                                        writer = csv.writer(file)
-                                                        writer.writerows(rows)
-                                                    break
-                                                case 4:
-                                                    rows[int(option)][2] = "Released"
-                                                    with open('figures.csv', 'w', newline='') as file:
-                                                        writer = csv.writer(file)
-                                                        writer.writerows(rows)
-                                                    break
-                                                case 5: 
-                                                    rows[int(option) + 1][2] = "Sold Out"
-                                                    break
-                                                case _:
-                                                    print("Please enter a valid option.")
-                                
-                                        
-                                    break
+                            update_status(rows, int(option))
                         case 4: 
                             pass
                         case 5:
@@ -136,7 +119,6 @@ def update_figures():
                     
 
 def show_figures():
-    
     rows = load_all_figures()
         
     fig_rows = rows[1:]
