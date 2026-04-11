@@ -1,23 +1,10 @@
-import csv
+import data
 
+FIGURE_FIELDS = ["Name", "Release Date", "Status", "Tier", "Stores"]
 VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
 STATUS_MENU = {i+1: name for i, name in enumerate(VALID_STATUSES)}
+FIELDS_MENU = {i+1: name for i, name in enumerate(FIGURE_FIELDS)}
 
-def save_all_figures(rows):
-    
-    with open("figures.csv", "w", newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(rows)
-    
-    print("All figures saved!")
-    
-def load_all_figures():
-    with open("figures.csv", 'r') as file:
-        reader = csv.reader(file)
-        rows = list(reader)
-
-    return rows
-    
 def get_choice(prompt, min_val, max_val):
     while True:
         choice = input(prompt)
@@ -44,13 +31,13 @@ def get_status_from_user():
 
 def update_status(rows, option):
     rows[option][2] = get_status_from_user()
-    save_all_figures(rows)
+    data.save_all_figures(rows)
                 
 def show_tier_menu():
     pass
 
 def update_figures():
-    rows = load_all_figures()
+    rows = data.load_all_figures()
         
     fig_rows = rows[1:]
     
@@ -63,58 +50,46 @@ def update_figures():
             print(f"{count}. {row[0]}")
             count += 1
         
-        print("0. Go Back")
-        count = 1
-        option = input(f"Pick a number between 1 and {total}, or press 0 to go back: ")
-        
-        if option.isdigit() is False:
-            print("Please pick a number.")
-            print()
-        
-        elif int(option) == 0:
+        print(f"{count}. Go Back")
+        option = get_choice("Please enter the number for the desired figure you want to update: ", 1, len(fig_rows) + 1)
+
+        if option == len(fig_rows) + 1:
             break
         
-        elif int(option) > total:
-            print("Please pick a valid option.")
-            print()
+        figure = fig_rows[option-1] 
+    
+        while True:
+            print(f"Updating {figure[0]}. What field would you like to edit on this figure?")
             
-        else: 
-            figure = fig_rows[int(option)-1] 
-        
-            while True:
-                print(f"Updating {figure[0]}.")
-                
-                print("What would you like to update on this figure?")
-                print("1. Name")
-                print("2. Release Date")
-                print("3. Status")
-                print("4. Tier")
-                print("5. Stores")
-                print("0. Go back")
-                
-                update = input("Please enter an option: ")
-                
-                if update.isdigit is False:
+            for i, field in FIELDS_MENU.items():
+                print(f"{i}. {field}")
+            
+            print(f"{len(FIELDS_MENU) + 1}. Go Back")
+            
+            update = get_choice("Please enter a digit for the field you want to edit: ", 1, len(FIELDS_MENU) + 1)
+            
+            if update == len(FIELDS_MENU) + 1:
+                break
+            
+            match(update):
+                case 1:
+                    break
+                case 2:
+                    break
+                case 3:
+                    print("== UPDATING STATUS == ")
+                    update_status(rows, int(option))
+                case 4: 
+                    break
+                case 5:
+                    print("== UPDATING STORES == ")
+                    break
+                case 6:
+                    break
+                case _:
                     print("Please enter a valid option.")
-                    
-                else:
-                    match(int(update)):
-                        case 1:
-                            pass
-                        case 2:
-                            pass
-                        case 3:
-                            print("== UPDATING STATUS == ")
-                            update_status(rows, int(option))
-                        case 4: 
-                            pass
-                        case 5:
-                            pass
-                        case 0:
-                            break
-                        case _:
-                            print("Please enter a valid option.")
-                            print()
+                    print()
+        count = 1
                         
                     
 
@@ -160,22 +135,8 @@ def add_figure():
     release_date = input("Release Date: ")
     figure_details["release_date"] = release_date
     
-    show_status_menu()
-    while True:
-        status = input("Please enter a status (1-5):")
-        
-        if status.isdigit is False:
-            print("Please enter a digit to select an option.")
-        else:
-            status = int(status)
-            
-            if status > len(VALID_STATUSES) or status < len(VALID_STATUSES):
-                print("Please enter a valid option.")
-            
-            else: 
-                new_status = VALID_STATUSES[status]
-                figure_details["status"] = new_status
-                break 
+    status = get_status_from_user()
+    figure_details["status"] = status
     
     tier = input("Tier: ")
     figure_details["tier"] = tier

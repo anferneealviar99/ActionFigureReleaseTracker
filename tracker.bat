@@ -1,3 +1,3 @@
 @echo off
-python figure_tracker.py
+python src/figure_tracker.py
 pause
