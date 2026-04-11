@@ -34,6 +34,7 @@ def update_figures():
             else: 
                 figure = fig_rows[int(option)] 
                 print(f"Updating {figure[0]}.")
+                print()
                 break
 
 def show_figures():
