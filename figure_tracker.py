@@ -1,5 +1,8 @@
 import csv
 
+VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
+STATUS_MENU = {i+1: name for i, name in enumerate(VALID_STATUSES)}
+
 def save_all_figures(rows):
     
     with open("figures.csv", "w", newline='') as file:
@@ -15,37 +18,34 @@ def load_all_figures():
 
     return rows
     
-def show_status_menu():
-    print("1. Leaked")
-    print("2. Announced")
-    print("3. Preorder")
-    print("4. Released")
-    print("5. Sold Out")
-    print()
+def get_choice(prompt, min_val, max_val):
+    while True:
+        choice = input(prompt)
+        
+        if not choice.isdigit():
+            print(f"Please enter a number between {min_val} and {max_val}.")
+            continue
+        
+        num = int(choice)
+        
+        if num < min_val or num > max_val:
+            print(f"Choice must be between {min_val} and {max_val}.")
+            continue
+            
+        return num
+        
+def get_status_from_user():
+    for i, status in STATUS_MENU.items():
+        print(f"{i}. {status}")
+        
+    option = get_choice("Please enter your desired status (1-5): ", 1, len(VALID_STATUSES))
+        
+    return VALID_STATUSES[option-1]
 
 def update_status(rows, option):
-    status_dict = {
-        1: "Leaked",
-        2: "Announced",
-        3: "Preorder",
-        4: "Released",
-        5: "Sold Out"
-    }
-    
-    while True:
-        show_status_menu()
-        status = input("What would you like to update the status to (1-5)? ")
-        status = int(status)
-        
-        if status not in status_dict.keys():
-            print("Please enter a valid option.")
-        else:
-            rows[option][2] = status_dict[status]
-            save_all_figures(rows)
-            break
-            
-        
-
+    rows[option][2] = get_status_from_user()
+    save_all_figures(rows)
+                
 def show_tier_menu():
     pass
 
@@ -150,19 +150,32 @@ def add_figure():
     figure_details = {}
     
     while True:
-        name = input("Figure Name: ")
+        name = input("Figure Name (Enter 0 to cancel): ")
         if name == "":
             print("Please enter a valid name.")
         else:
+            figure_details["name"] = name
             break
-    
-    figure_details["name"] = name
     
     release_date = input("Release Date: ")
     figure_details["release_date"] = release_date
     
-    status = input("Status: ")
-    figure_details["status"] = status
+    show_status_menu()
+    while True:
+        status = input("Please enter a status (1-5):")
+        
+        if status.isdigit is False:
+            print("Please enter a digit to select an option.")
+        else:
+            status = int(status)
+            
+            if status > len(VALID_STATUSES) or status < len(VALID_STATUSES):
+                print("Please enter a valid option.")
+            
+            else: 
+                new_status = VALID_STATUSES[status]
+                figure_details["status"] = new_status
+                break 
     
     tier = input("Tier: ")
     figure_details["tier"] = tier
