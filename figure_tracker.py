@@ -32,7 +32,13 @@ def show_figures():
 def add_figure():
     figure_details = {}
     
-    name = input("Figure Name: ")
+    while True:
+        name = input("Figure Name: ")
+        if name == "":
+            print("Please enter a valid name.")
+        else:
+            break
+    
     figure_details["name"] = name
     
     release_date = input("Release Date: ")
