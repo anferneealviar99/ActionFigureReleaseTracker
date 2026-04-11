@@ -67,10 +67,7 @@ def update_tier(rows, option):
 
 def update_figures():
     rows = data.load_all_figures()
-        
     fig_rows = rows[1:]
-    
-    
     total = len(fig_rows)
     
     print("Which figure would you like to edit?")
@@ -81,9 +78,9 @@ def update_figures():
             count += 1
         
         print(f"{count}. Go Back")
-        option = get_choice("Please enter the number for the desired figure you want to update: ", 1, len(fig_rows) + 1)
+        option = get_choice("Please enter the number for the desired figure you want to update: ", 1, total + 1)
 
-        if option == len(fig_rows) + 1:
+        if option == total + 1:
             break
         
         figure = fig_rows[option-1] 
@@ -105,6 +102,7 @@ def update_figures():
                 case 1:
                     print("== UPDATING NAME ==")
                     update_name(rows, int(option))
+                    break
                 case 2:
                     break
                 case 3:
@@ -115,8 +113,6 @@ def update_figures():
                     update_tier(rows, int(option))
                 case 5:
                     print("== UPDATING STORES == ")
-                    break
-                case 6:
                     break
                 case _:
                     print("Please enter a valid option.")
@@ -169,7 +165,7 @@ def add_figure():
     status = get_status_from_user()
     figure_details["status"] = status
     
-    tier = input("Tier: ")
+    tier = get_tier_from_user()
     figure_details["tier"] = tier
     
     figure_details["websites"] = {}
