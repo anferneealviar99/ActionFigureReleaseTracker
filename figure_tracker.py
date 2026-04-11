@@ -1,5 +1,8 @@
 import csv
 
+def update_figures():
+    pass
+
 def show_figures():
     with open("figures.csv", 'r') as file:
         reader = csv.reader(file)
@@ -20,12 +23,13 @@ def show_figures():
             tier = row[3]
             print(f"Tier: {tier}")
             
-            website_list = row[4].split(";")
-            for website in website_list:
-                store, url = website.split(":", 1)
+            if row[4] != "":
+                website_list = row[4].split(";")
+                for website in website_list:
+                    store, url = website.split(":", 1)
+                    
+                    print(f"Store: {store.strip()} ({url.strip()})")
                 
-                print(f"Store: {store.strip()} ({url.strip()})")
-            
             print()
                 
             
@@ -119,6 +123,7 @@ def main():
                 show_figures()
             case 3:
                 print("=== UPDATE FIGURES ===")
+                update_figures()
             case 4:
                 print("=== DELETE FIGURES ===")
             case 5:
