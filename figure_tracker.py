@@ -1,5 +1,11 @@
 import csv
 
+def show_status_menu():
+    pass
+
+def show_tier_menu():
+    pass
+
 def update_figures():
     with open("figures.csv", 'r') as file:
         reader = csv.reader(file)
