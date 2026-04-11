@@ -64,7 +64,6 @@ def update_tier(rows, option):
     
     print(f"Updated {rows[option][0]} tier to {new_tier}. Saving...")
     data.save_all_figures(new_rows)
-    
 
 def update_figures():
     rows = data.load_all_figures()
@@ -205,7 +204,6 @@ def add_figure():
     data.save_all_figures(rows)
         
     print(f"Added: {figure_details['name']}")
-    
 
 def show_menu():
     print("=== ACTION FIGURE RELEASE TRACKER ===")
@@ -246,5 +244,4 @@ def main():
                     print("Invalid option. Please pick between options 1-5.")   
                     print()
                     
-        
 main() 
