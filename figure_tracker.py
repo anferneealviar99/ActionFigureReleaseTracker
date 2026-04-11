@@ -1,6 +1,31 @@
 import csv
 import os
 
+def show_figures():
+    with open("figures.csv", 'r') as file:
+        reader = csv.reader(file)
+        rows = list(reader)
+        
+        fig_rows = rows[1:]
+        
+        for row in fig_rows:
+            name = row[0]
+            print(f"Name: {name}")
+            
+            release_date = row[1]
+            print(f"Release Date: {release_date}")
+            
+            tier = row[2]
+            print(f"Tier: {tier}")
+            
+            website_list = row[3].split(";")
+            for website in website_list:
+                store, url = website.split(":", 1)
+                
+                print(f"Store: {store} ({url.strip()})")
+                
+                
+            
 def add_figure():
     figure_details = {}
     
@@ -78,6 +103,7 @@ def main():
                 add_figure()
             case 2:
                 print("=== SHOW ALL FIGURES ===")
+                show_figures()
             case 3:
                 print("=== UPDATE FIGURES ===")
             case 4:
