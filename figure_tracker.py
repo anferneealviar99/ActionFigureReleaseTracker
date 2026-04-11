@@ -1,5 +1,4 @@
 import csv
-import os
 
 def show_figures():
     with open("figures.csv", 'r') as file:
