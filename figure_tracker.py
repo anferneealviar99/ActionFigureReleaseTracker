@@ -15,10 +15,13 @@ def show_figures():
             release_date = row[1]
             print(f"Release Date: {release_date}")
             
-            tier = row[2]
+            status = row[2]
+            print(f"Status: {status}")
+            
+            tier = row[3]
             print(f"Tier: {tier}")
             
-            website_list = row[3].split(";")
+            website_list = row[4].split(";")
             for website in website_list:
                 store, url = website.split(":", 1)
                 
