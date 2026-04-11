@@ -1,5 +1,4 @@
-import data
-
+import data, update
 FIGURE_FIELDS = ["Name", "Release Date", "Status", "Tier", "Stores"]
 VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
 STATUS_MENU = {i+1: name for i, name in enumerate(VALID_STATUSES)}
@@ -30,8 +29,11 @@ def get_status_from_user():
     return VALID_STATUSES[option-1]
 
 def update_status(rows, option):
-    rows[option][2] = get_status_from_user()
-    data.save_all_figures(rows)
+    new_status = get_status_from_user()
+    new_rows = update.set_status(rows, option, new_status)
+    
+    print(f"Updated {rows[option][0]} status to {new_status}. Saving...")
+    data.save_all_figures(new_rows)
                 
 def show_tier_menu():
     pass
@@ -94,7 +96,7 @@ def update_figures():
                     
 
 def show_figures():
-    rows = load_all_figures()
+    rows = data.load_all_figures()
         
     fig_rows = rows[1:]
     
@@ -166,20 +168,11 @@ def add_figure():
     websites_str = '; '.join([f"{store}: {url}" for store, url in figure_details["websites"].items()])
     # Read existing data then write everything back to avoid overwrite
     
-    try:
-        with open("figures.csv", 'r') as file:
-            reader = csv.reader(file)
-            rows = list(reader)
-    except FileNotFoundError:
-        rows = []
-        
-    # If file is empty or has no header, add header
-    if not rows:
-        rows = [["Name", "Release Date", "Status", "Tier", "Websites"]]
+    rows = data.load_all_figures()
         
     rows.append([figure_details["name"], figure_details["release_date"], figure_details["status"], figure_details["tier"], websites_str])
     
-    save_all_figures(rows)
+    data.save_all_figures(rows)
         
     print(f"Added: {figure_details['name']}")
     
