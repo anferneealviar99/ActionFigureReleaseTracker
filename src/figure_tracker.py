@@ -195,12 +195,9 @@ def add_figure():
         figure_details["websites"][store_name] = store_url
     
     websites_str = '; '.join([f"{store}: {url}" for store, url in figure_details["websites"].items()])
-    # Read existing data then write everything back to avoid overwrite
     
     rows = data.load_all_figures()
-        
     rows.append([figure_details["name"], figure_details["release_date"], figure_details["status"], figure_details["tier"], websites_str])
-    
     data.save_all_figures(rows)
         
     print(f"Added: {figure_details['name']}")
