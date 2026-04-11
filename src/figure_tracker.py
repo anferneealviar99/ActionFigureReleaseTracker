@@ -28,6 +28,18 @@ def get_status_from_user():
         
     return VALID_STATUSES[option-1]
 
+def get_name_from_user():
+    new_name = input("What would you like to name this figure? ")
+    return new_name
+
+def update_name(rows, option):
+    old_name = rows[option][0]
+    new_name = get_name_from_user()
+    new_rows = update.set_name(rows, option, new_name)
+    
+    print(f"Changed {old_name} to {new_name}. Saving...")
+    data.save_all_figures(new_rows)
+
 def update_status(rows, option):
     new_status = get_status_from_user()
     new_rows = update.set_status(rows, option, new_status)
@@ -43,11 +55,12 @@ def update_figures():
         
     fig_rows = rows[1:]
     
-    count = 1
+    
     total = len(fig_rows)
     
     print("Which figure would you like to edit?")
     while True:
+        count = 1
         for row in fig_rows:
             print(f"{count}. {row[0]}")
             count += 1
@@ -75,7 +88,8 @@ def update_figures():
             
             match(update):
                 case 1:
-                    break
+                    print("== UPDATING NAME ==")
+                    update_name(rows, int(option))
                 case 2:
                     break
                 case 3:
@@ -91,7 +105,6 @@ def update_figures():
                 case _:
                     print("Please enter a valid option.")
                     print()
-        count = 1
                         
                     
 
