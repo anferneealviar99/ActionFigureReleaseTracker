@@ -1,7 +1,37 @@
 import csv
 
 def update_figures():
-    pass
+    with open("figures.csv", 'r') as file:
+        reader = csv.reader(file)
+        rows = list(reader)
+        
+        fig_rows = rows[1:]
+        
+        count = 1
+        total = len(fig_rows)
+        print("Which figure would you like to edit?")
+        while True:
+            for row in fig_rows:
+                print(f"{count}. {row[0]}")
+                count += 1
+            
+            print("0. Go Back")
+            count = 1
+            option = input(f"Pick a number between 1 and {total}, or press 0 to go back.")
+            
+            if option.isdigit() is False:
+                print("Please pick a number.")
+                print()
+            
+            elif int(option) == 0:
+                break
+            
+            elif int(option) > total:
+                print("Please pick a valid option.")
+                print()
+                
+            else: 
+                break
 
 def show_figures():
     with open("figures.csv", 'r') as file:
@@ -113,26 +143,30 @@ def main():
         
         choice = input("Please choose an option (1-5): ")
         
-        match(int(choice)):
-            case 1:
-                print("=== ADD A FIGURE ===")
-                add_figure()
-            case 2:
-                print("=== SHOW ALL FIGURES ===")
-                print()
-                show_figures()
-            case 3:
-                print("=== UPDATE FIGURES ===")
-                update_figures()
-            case 4:
-                print("=== DELETE FIGURES ===")
-            case 5:
-                print("EXITING PROGRAM")
-                break 
-            case _:
-                print("Invalid option. Please pick between options 1-5.")   
-                
+        if choice.isdigit() is False:
+            print("Please choose a valid option.")
+            print()
+            
+        else:
+            match(int(choice)):
+                case 1:
+                    print("=== ADD A FIGURE ===")
+                    add_figure()
+                case 2:
+                    print("=== SHOW ALL FIGURES ===")
+                    print()
+                    show_figures()
+                case 3:
+                    print("=== UPDATE FIGURES ===")
+                    update_figures()
+                case 4:
+                    print("=== DELETE FIGURES ===")
+                case 5:
+                    print("EXITING PROGRAM")
+                    break 
+                case _:
+                    print("Invalid option. Please pick between options 1-5.")   
+                    print()
+                    
         
-        
-
 main() 
