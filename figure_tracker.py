@@ -25,7 +25,7 @@ def show_figures():
             for website in website_list:
                 store, url = website.split(":", 1)
                 
-                print(f"Store: {store} ({url.strip()})")
+                print(f"Store: {store.strip()} ({url.strip()})")
             
             print()
                 
@@ -110,6 +110,7 @@ def main():
                 add_figure()
             case 2:
                 print("=== SHOW ALL FIGURES ===")
+                print()
                 show_figures()
             case 3:
                 print("=== UPDATE FIGURES ===")
