@@ -12,3 +12,9 @@ def set_name(rows, option, new_name):
     new_rows[option][0] = new_name 
     
     return new_rows
+
+def set_tier(rows, option, new_tier):
+    new_rows = rows.copy()
+    new_rows[option][3] = new_tier
+    
+    return new_rows

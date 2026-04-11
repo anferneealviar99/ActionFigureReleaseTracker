@@ -1,8 +1,11 @@
 import data, update
 FIGURE_FIELDS = ["Name", "Release Date", "Status", "Tier", "Stores"]
 VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
+TIERS = ["Preorder ASAP", "Watchlist", "Release Day", "Wait and Watch", "Pass"]
+
 STATUS_MENU = {i+1: name for i, name in enumerate(VALID_STATUSES)}
 FIELDS_MENU = {i+1: name for i, name in enumerate(FIGURE_FIELDS)}
+TIERS_MENU = {i+1: name for i, name in enumerate(TIERS)}
 
 def get_choice(prompt, min_val, max_val):
     while True:
@@ -47,8 +50,21 @@ def update_status(rows, option):
     print(f"Updated {rows[option][0]} status to {new_status}. Saving...")
     data.save_all_figures(new_rows)
                 
-def show_tier_menu():
-    pass
+def get_tier_from_user():
+    for i, tier in TIERS_MENU.items():
+        print(f"{i}. {tier}")
+        
+    choice = get_choice("Please select the tier you want to change this figure to: ", 1, len(TIERS))
+    
+    return TIERS[choice-1]
+        
+def update_tier(rows, option):
+    new_tier = get_tier_from_user()
+    new_rows = update.set_tier(rows, option, new_tier)
+    
+    print(f"Updated {rows[option][0]} tier to {new_tier}. Saving...")
+    data.save_all_figures(new_rows)
+    
 
 def update_figures():
     rows = data.load_all_figures()
@@ -96,7 +112,8 @@ def update_figures():
                     print("== UPDATING STATUS == ")
                     update_status(rows, int(option))
                 case 4: 
-                    break
+                    print("== UPDATING TIER ==")
+                    update_tier(rows, int(option))
                 case 5:
                     print("== UPDATING STORES == ")
                     break
