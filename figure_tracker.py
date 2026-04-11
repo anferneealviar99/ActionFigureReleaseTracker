@@ -38,10 +38,44 @@ def update_figures():
                 print()
                 
             else: 
-                figure = fig_rows[int(option)] 
-                print(f"Updating {figure[0]}.")
-                print()
-                break
+                figure = fig_rows[int(option)-1] 
+            
+                while True:
+                    print(f"Updating {figure[0]}.")
+                    
+                    print("What would you like to update on this figure?")
+                    print("1. Name")
+                    print("2. Release Date")
+                    print("3. Status")
+                    print("4. Tier")
+                    print("5. Stores")
+                    
+                    print("0. Go back")
+                    
+                    option = input("Please enter an option: ")
+                    
+                    if option.isdigit is False:
+                        print("Please enter a valid option.")
+                        
+                    else:
+                        match(int(option)):
+                            case 1:
+                                pass
+                            case 2:
+                                pass
+                            case 3:
+                                pass
+                            case 4: 
+                                pass
+                            case 5:
+                                pass
+                            case 0:
+                                break
+                            case _:
+                                print("Please enter a valid option.")
+                                print()
+                        
+                    
 
 def show_figures():
     with open("figures.csv", 'r') as file:
