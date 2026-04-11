@@ -38,17 +38,17 @@ def get_name_from_user():
 def update_name(rows, option):
     old_name = rows[option][0]
     new_name = get_name_from_user()
-    new_rows = update.set_name(rows, option, new_name)
+    update.set_name(rows, option, new_name)
     
     print(f"Changed {old_name} to {new_name}. Saving...")
-    data.save_all_figures(new_rows)
+    data.save_all_figures(rows)
 
 def update_status(rows, option):
     new_status = get_status_from_user()
-    new_rows = update.set_status(rows, option, new_status)
+    update.set_status(rows, option, new_status)
     
     print(f"Updated {rows[option][0]} status to {new_status}. Saving...")
-    data.save_all_figures(new_rows)
+    data.save_all_figures(rows)
                 
 def get_tier_from_user():
     for i, tier in TIERS_MENU.items():
@@ -60,10 +60,10 @@ def get_tier_from_user():
         
 def update_tier(rows, option):
     new_tier = get_tier_from_user()
-    new_rows = update.set_tier(rows, option, new_tier)
+    update.set_tier(rows, option, new_tier)
     
     print(f"Updated {rows[option][0]} tier to {new_tier}. Saving...")
-    data.save_all_figures(new_rows)
+    data.save_all_figures(rows)
 
 def update_figures():
     rows = data.load_all_figures()
