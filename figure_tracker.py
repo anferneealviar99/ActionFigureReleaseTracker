@@ -9,6 +9,7 @@ def update_figures():
         
         count = 1
         total = len(fig_rows)
+        
         print("Which figure would you like to edit?")
         while True:
             for row in fig_rows:
@@ -17,7 +18,7 @@ def update_figures():
             
             print("0. Go Back")
             count = 1
-            option = input(f"Pick a number between 1 and {total}, or press 0 to go back.")
+            option = input(f"Pick a number between 1 and {total}, or press 0 to go back: ")
             
             if option.isdigit() is False:
                 print("Please pick a number.")
@@ -31,6 +32,8 @@ def update_figures():
                 print()
                 
             else: 
+                figure = fig_rows[int(option)] 
+                print(f"Updating {figure[0]}.")
                 break
 
 def show_figures():
