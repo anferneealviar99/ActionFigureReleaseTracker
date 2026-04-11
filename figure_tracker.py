@@ -26,7 +26,8 @@ def show_figures():
                 store, url = website.split(":", 1)
                 
                 print(f"Store: {store} ({url.strip()})")
-                
+            
+            print()
                 
             
 def add_figure():
