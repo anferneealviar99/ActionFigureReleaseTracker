@@ -35,6 +35,9 @@ def add_figure():
     release_date = input("Release Date: ")
     figure_details["release_date"] = release_date
     
+    status = input("Status: ")
+    figure_details["status"] = status
+    
     tier = input("Tier: ")
     figure_details["tier"] = tier
     
@@ -72,9 +75,9 @@ def add_figure():
         
     # If file is empty or has no header, add header
     if not rows:
-        rows = [["Name", "Release Date", "Tier", "Websites"]]
+        rows = [["Name", "Release Date", "Status", "Tier", "Websites"]]
         
-    rows.append([figure_details["name"], figure_details["release_date"], figure_details["tier"], websites_str])
+    rows.append([figure_details["name"], figure_details["release_date"], figure_details["status"], figure_details["tier"], websites_str])
     
     with open("figures.csv", 'w', newline='') as file:
         writer = csv.writer(file)
