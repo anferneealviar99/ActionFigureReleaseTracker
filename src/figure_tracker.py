@@ -1,4 +1,5 @@
-import data, update
+import data, update, regex as re, date
+
 FIGURE_FIELDS = ["Name", "Release Date", "Status", "Tier", "Stores"]
 VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
 TIERS = ["Preorder ASAP", "Watchlist", "Release Day", "Wait and Watch", "Pass"]
@@ -22,6 +23,17 @@ def get_choice(prompt, min_val, max_val):
             continue
             
         return num
+    
+def get_release_date(prompt):
+    while True:
+        release_date = input(prompt)
+        
+        valid_date = date.validate_date(release_date)
+        
+        if valid_date:
+            return valid_date
+        else:
+            print("The date you have entered is invalid. Use YYYY-MM-DD, YYYY-MM, or YYYY.")
         
 def get_status_from_user():
     for i, status in STATUS_MENU.items():
@@ -68,6 +80,9 @@ def update_tier(rows, option):
     
     print(f"Updated {rows[option][0]} tier to {new_tier}. Saving...")
     data.save_all_figures(rows)
+    
+def update_date(rows, option):
+    pass
 
 def update_figures():
     rows = data.load_all_figures()
@@ -109,6 +124,8 @@ def update_figures():
                     update_name(rows, int(option))
                     break
                 case 2:
+                    print("== UPDATING RELEASE DATE ==")
+                    update_date(rows, int(option))
                     break
                 case 3:
                     print("== UPDATING STATUS == ")
@@ -135,7 +152,7 @@ def show_figures():
         print(f"Name: {name}")
         
         release_date = row[1]
-        print(f"Release Date: {release_date}")
+        print(f"Release Date: {date.parse_date(release_date)}")
         
         status = row[2]
         print(f"Status: {status}")
@@ -164,7 +181,7 @@ def add_figure():
             figure_details["name"] = name
             break
     
-    release_date = input("Release Date: ")
+    release_date = get_release_date("Please enter the release date of the figure (must be in YYYY-MM-DD, YYYY-MM or YYYY format):  ")
     figure_details["release_date"] = release_date
     
     status = get_status_from_user()
