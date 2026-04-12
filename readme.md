@@ -21,7 +21,7 @@ Tier: Personal preference
     
 * Release Day: Buy on release day
     
-* Wait and Watch: Wait for reviews of the figure
+* Wait and Watch: Wait for reviews of the figure, or sale, etc.
     
 * Pass: Safe to pass
 
