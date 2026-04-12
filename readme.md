@@ -9,7 +9,7 @@ This is a command-line action figure release tracker that can be used to manuall
 ## Fields
 Name: Name of the action figure
 
-Release Date: Prospective date of release (currently in Month Year format e.g., June 2026)
+Release Date: Prospective date of release (Uses YYYY-MM-DD format)
 
 Status: Leaked, Announced, Preorder, Released, Sold Out
 
