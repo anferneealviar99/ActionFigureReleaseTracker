@@ -27,6 +27,11 @@ Tier: Personal preference
 
 Stores: Stores and their URLs
 
+## Features
+* Add, view, and update figures (can only currently update name, tier, or status)
+* Persistent CSV storage
+* Multi-store support per figure
+
 ## How To Use
 1. Download Python 3.10+ from [Python.org](https://www.python.org/)
 2. Clone this repository.
