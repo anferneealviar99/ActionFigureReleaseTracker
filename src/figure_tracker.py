@@ -59,6 +59,10 @@ def get_tier_from_user():
     return TIERS[choice-1]
         
 def update_tier(rows, option):
+    """ Updates the tier level of the figure to a different tier 
+        Parameters: rows (the data), option (the figure in question)
+    """
+
     new_tier = get_tier_from_user()
     update.set_tier(rows, option, new_tier)
     
