@@ -2,6 +2,10 @@
 
 This is a command-line action figure release tracker that can be used to manually track action figures that are being released.
 
+## Requirements
+* Python 3.10 or higher
+* Windows
+
 ## Fields
 Name: Name of the action figure
 
@@ -24,4 +28,6 @@ Tier: Personal preference
 Stores: Stores and their URLs
 
 ## How To Use
-Clone this repository, then click on tracker.bat 
+1. Download Python 3.10+ from [Python.org](https://www.python.org/)
+2. Clone this repository.
+3. Double-click on tracker.bat
