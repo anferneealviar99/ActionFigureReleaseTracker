@@ -15,7 +15,7 @@ Status: Leaked, Announced, Preorder, Released, Sold Out
 
 Tier: Personal preference
     
-* Preorder Now: Preorder straightaway
+* Preorder ASAP: Preorder ASAP
     
 * Watchlist: Wait until 2 weeks before prospective release
     
