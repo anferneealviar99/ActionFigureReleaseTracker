@@ -226,6 +226,7 @@ def update_figures():
     option = get_figure("Which figure would you like to edit? ", rows)
     
     if option == len(rows) or option == 0:
+        print()
         return
     
     while True:
@@ -265,27 +266,33 @@ def show_figures():
         
     fig_rows = rows[1:]
     
-    for row in fig_rows:
-        name = row[0]
-        print(f"Name: {name}")
-        
-        release_date = row[1]
-        print(f"Release Date: {date.parse_date(release_date)}")
-        
-        status = row[2]
-        print(f"Status: {status}")
-        
-        tier = row[3]
-        print(f"Tier: {tier}")
-        
-        if row[4] != "":
-            website_list = row[4].split(";")
-            for website in website_list:
-                store, url = website.split(":", 1)
-                
-                print(f"Store: {store.strip()} ({url.strip()})")
+    if len(fig_rows) == 0:
+        print("No figures.")
+    
+    else: 
+        for row in fig_rows:
+            name = row[0]
+            print(f"Name: {name}")
             
-        print()
+            release_date = row[1]
+            print(f"Release Date: {date.parse_date(release_date)}")
+            
+            status = row[2]
+            print(f"Status: {status}")
+            
+            tier = row[3]
+            print(f"Tier: {tier}")
+            
+            if row[4] != "":
+                website_list = row[4].split(";")
+                for website in website_list:
+                    store, url = website.split(":", 1)
+                    
+                    print(f"Store: {store.strip()} ({url.strip()})")
+            
+            print()
+                
+    print()
                 
             
 def add_figure():
@@ -329,6 +336,7 @@ def main():
         show_menu()
         
         choice = input("Please choose an option (1-5): ")
+        print()
         
         if choice.isdigit() is False:
             print("Please choose a valid option.")
@@ -341,7 +349,6 @@ def main():
                     add_figure()
                 case 2:
                     print("=== SHOW ALL FIGURES ===")
-                    print()
                     show_figures()
                 case 3:
                     update_figures()
