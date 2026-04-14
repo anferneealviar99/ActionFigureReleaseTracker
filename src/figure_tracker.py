@@ -96,62 +96,95 @@ def update_date(rows, option):
     data.save_all_figures(rows)
     
     print()
+    
+def update_stores(rows, option):
+    pass
 
-def update_figures():
-    rows = data.load_all_figures()
+def get_figure(prompt, rows):
     fig_rows = rows[1:]
     total = len(fig_rows)
     
+    if total == 0:
+        print("No figures detected in the list. Please add a figure.")
+        return 0
+
     while True:
-        print("=== UPDATE FIGURES ===")
-        print("Which figure would you like to edit?")
         count = 1
+        print(prompt)
         for row in fig_rows:
             print(f"{count}. {row[0]}")
             count += 1
-        
+            
         print(f"{count}. Go Back")
-        option = get_choice("Please enter the number for the desired figure you want to update: ", 1, total + 1)
+        
+        option = get_choice("Please enter the number for the figure you want to select: ", 1, total + 1)
+        
+        return option
+    
+def delete_figure():
+    rows = data.load_all_figures()
+    
+    option = get_figure(f"Which figure would you like to delete? Please choose between 1 and {len(rows)}", rows)
+    
+    if option == len(rows) or option == 0:
+        return
+    
+    desired_row_to_delete = rows[option]
+    print(f"Deleting {desired_row_to_delete[0]}...")
+    
+    prev_length = len(rows)
+    rows.pop(option)
+    curr_length = len(rows)
+    
+    if curr_length < prev_length:
+        print(f"{desired_row_to_delete[0]} has been deleted. Saving...")
+        data.save_all_figures(rows)
+    else:
+        print("Error.")
+        
 
-        if option == total + 1:
+def update_figures():
+    rows = data.load_all_figures()
+   
+    option = get_figure("Which figure would you like to edit? ", rows)
+    
+    if option == len(rows) or option == 0:
+        return
+    
+    while True:
+        print(f"Updating {rows[option][0]}. What field would you like to edit on this figure?")
+        
+        for i, field in FIELDS_MENU.items():
+            print(f"{i}. {field}")
+        
+        print(f"{len(FIELDS_MENU) + 1}. Go Back")
+        
+        update = get_choice("Please enter a digit for the field you want to edit: ", 1, len(FIELDS_MENU) + 1)
+        
+        if update == len(FIELDS_MENU) + 1:
             break
         
-        figure = fig_rows[option-1] 
-    
-        while True:
-            print(f"Updating {figure[0]}. What field would you like to edit on this figure?")
-            
-            for i, field in FIELDS_MENU.items():
-                print(f"{i}. {field}")
-            
-            print(f"{len(FIELDS_MENU) + 1}. Go Back")
-            
-            update = get_choice("Please enter a digit for the field you want to edit: ", 1, len(FIELDS_MENU) + 1)
-            
-            if update == len(FIELDS_MENU) + 1:
+        match(update):
+            case 1:
+                print("== UPDATING NAME ==")
+                update_name(rows, int(option))
                 break
-            
-            match(update):
-                case 1:
-                    print("== UPDATING NAME ==")
-                    update_name(rows, int(option))
-                    break
-                case 2:
-                    print("== UPDATING RELEASE DATE ==")
-                    update_date(rows, int(option))
-                    break
-                case 3:
-                    print("== UPDATING STATUS == ")
-                    update_status(rows, int(option))
-                case 4: 
-                    print("== UPDATING TIER ==")
-                    update_tier(rows, int(option))
-                case 5:
-                    print("== UPDATING STORES == ")
-                    break
-                case _:
-                    print("Please enter a valid option.")
-                    print()
+            case 2:
+                print("== UPDATING RELEASE DATE ==")
+                update_date(rows, int(option))
+                break
+            case 3:
+                print("== UPDATING STATUS == ")
+                update_status(rows, int(option))
+            case 4: 
+                print("== UPDATING TIER ==")
+                update_tier(rows, int(option))
+            case 5:
+                print("== UPDATING STORES == ")
+                break
+            case _:
+                print("Please enter a valid option.")
+                print()
                         
                     
 
@@ -263,7 +296,8 @@ def main():
                 case 3:
                     update_figures()
                 case 4:
-                    print("=== DELETE FIGURES ===")
+                    print("=== DELETE FIGURE ===")
+                    delete_figure()
                 case 5:
                     print("EXITING PROGRAM")
                     break 
