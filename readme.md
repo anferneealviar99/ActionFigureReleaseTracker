@@ -29,7 +29,6 @@ Stores: Stores and their URLs
 
 ## Features
 * Add, view, update, or delete figures
-  * Can only update name, release date, status, and tier so far
 * Persistent CSV storage
 * Multi-store support per figure
 
