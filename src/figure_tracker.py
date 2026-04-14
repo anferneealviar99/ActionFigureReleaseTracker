@@ -1,4 +1,4 @@
-import data, update, regex as re, date
+import data, update, date
 
 FIGURE_FIELDS = ["Name", "Release Date", "Status", "Tier", "Stores"]
 VALID_STATUSES = ["Leaked", "Announced", "Preorder", "Released", "Sold Out"]
@@ -82,7 +82,20 @@ def update_tier(rows, option):
     data.save_all_figures(rows)
     
 def update_date(rows, option):
-    pass
+    """ 
+        Updates the release date of the figure 
+        Parameters: rows (the list of figures), option (the chosen figure)
+    """
+    old_date = date.parse_date(rows[option][1])
+    new_date = get_release_date("Please enter the updated release date for this figure (must be YYYY-MM-DD, YYYY-MM, or YYYY): ")
+    parsed_new_date = date.parse_date(new_date)
+    update.set_date(rows, option, new_date)
+    
+    print(f"Updated the release date of {rows[option][0]} from {old_date} to {parsed_new_date}.")
+    
+    data.save_all_figures(rows)
+    
+    print()
 
 def update_figures():
     rows = data.load_all_figures()

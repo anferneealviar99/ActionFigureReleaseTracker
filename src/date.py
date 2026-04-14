@@ -1,4 +1,4 @@
-import regex as re
+import re
 from datetime import datetime
 
 def get_month(month):
@@ -39,6 +39,7 @@ def is_real_date(date_str):
         
 def validate_date(release_date):
     """ Accept inputs for the release date only if format matches YYYY-MM-DD, YYYY-MM, or YYYY """
+    valid_date = ""
     
     if re.match(r"^\d{4}-\d{2}-\d{2}$", release_date):
         valid_date = release_date
