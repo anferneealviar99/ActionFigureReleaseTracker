@@ -28,7 +28,8 @@ Tier: Personal preference
 Stores: Stores and their URLs
 
 ## Features
-* Add, view, and update figures (can only currently update name, tier, or status)
+* Add, view, update, or delete figures
+  * Can only update name, release date, status, and tier so far
 * Persistent CSV storage
 * Multi-store support per figure
 
