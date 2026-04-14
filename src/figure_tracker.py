@@ -240,23 +240,25 @@ def add_figure():
     
     while True:
         # Allow to enter websites
-        print("Enter the store name and URL. Type 'finish' to exit this menu.")
+        print("Enter the store name and URL. Press enter again to skip.")
         store_name = input("Store Name: ")
         
-        if store_name.lower() == "finish":
+        if store_name.lower() == "":
             break
         
-        if store_name.strip() == "":
-            print("Store name cannot be blank.")
-            continue
-        
-        store_url = input("URL: ")
-        
-        if store_url.strip() == "":
-            print("URL cannot be blank")
-            continue
+        else:
+            choice = get_choice("Is there a link for the store? Type 1 for yes, and 2 for no: ", 1, 2)
             
-        figure_details["websites"][store_name] = store_url
+            if choice == 1:
+                store_url = input("URL: ")
+            
+                if store_url.strip() == "":
+                    print("URL cannot be blank")
+                    continue
+            else:
+                store_url = "No URL"
+            
+            figure_details["websites"][store_name] = store_url
     
     websites_str = '; '.join([f"{store}: {url}" for store, url in figure_details["websites"].items()])
     
