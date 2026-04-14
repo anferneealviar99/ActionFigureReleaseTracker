@@ -97,8 +97,85 @@ def update_date(rows, option):
     
     print()
     
+def get_websites(website_str):
+    
+    if website_str == "":
+        return {}
+    
+    website_list = website_str.split(";")
+    
+    websites = {}
+    
+    for website in website_list:
+        details = website.split(":", 1)
+        websites[details[0]] = details[1]
+        
+    return websites
+    
+def enter_stores(website_str = ""):
+    websites = get_websites(website_str)
+    
+    while True:
+        # Allow to enter websites
+        print("Enter the store name and URL. Press enter again to skip.")
+        store_name = input("Store Name: ")
+        
+        if store_name.lower() == "":
+            break
+        
+        else:
+            choice = get_choice("Is there a link for the store? Type 1 for yes, and 2 for no: ", 1, 2)
+            
+            if choice == 1:
+                store_url = input("URL: ")
+            
+                if store_url.strip() == "":
+                    print("URL cannot be blank")
+                    continue
+            else:
+                store_url = "No URL"
+            
+            websites[store_name] = store_url
+    
+    websites_str = '; '.join([f"{store}: {url}" for store, url in websites.items()])
+    return websites_str
+    
 def update_stores(rows, option):
-    pass
+    figure = rows[option][0]
+    
+    print(f"Updating listings for {figure}")
+    
+    print("Current listings:")
+    if len(rows[option]) == 5:
+        websites = rows[option][4]
+        website_list = websites.split(";")
+        
+        for store in website_list:
+            print(store)
+    else:
+        print("No stores listed.")
+    
+    update_choice = get_choice("Would you like to add or delete listings for this figure? 1 for update, 2 for delete, 3 to go back: ", 1, 3)
+    
+    if update_choice == 1:
+        if len(rows[option]) == 5:
+            current_websites = rows[option][4]
+        else:
+            current_websites = ""
+        
+        website_str = enter_stores(current_websites)
+        
+        if len(rows[option]) == 5:
+            rows[option][4] = website_str
+        else:
+            rows[option].append(website_str)
+
+        data.save_all_figures(rows)
+    elif update_stores == 2:
+        # delete_stores(figure[rows][4])
+        pass
+    else: 
+        return
 
 def get_figure(prompt, rows):
     fig_rows = rows[1:]
@@ -141,7 +218,7 @@ def delete_figure():
         data.save_all_figures(rows)
     else:
         print("Error.")
-        
+    
 
 def update_figures():
     rows = data.load_all_figures()
@@ -161,18 +238,13 @@ def update_figures():
         
         update = get_choice("Please enter a digit for the field you want to edit: ", 1, len(FIELDS_MENU) + 1)
         
-        if update == len(FIELDS_MENU) + 1:
-            break
-        
         match(update):
             case 1:
                 print("== UPDATING NAME ==")
                 update_name(rows, int(option))
-                break
             case 2:
                 print("== UPDATING RELEASE DATE ==")
                 update_date(rows, int(option))
-                break
             case 3:
                 print("== UPDATING STATUS == ")
                 update_status(rows, int(option))
@@ -181,13 +253,13 @@ def update_figures():
                 update_tier(rows, int(option))
             case 5:
                 print("== UPDATING STORES == ")
+                update_stores(rows, int(option))
+            case 6:
                 break
             case _:
                 print("Please enter a valid option.")
                 print()
-                        
                     
-
 def show_figures():
     rows = data.load_all_figures()
         
@@ -236,34 +308,10 @@ def add_figure():
     tier = get_tier_from_user()
     figure_details["tier"] = tier
     
-    figure_details["websites"] = {}
-    
-    while True:
-        # Allow to enter websites
-        print("Enter the store name and URL. Press enter again to skip.")
-        store_name = input("Store Name: ")
-        
-        if store_name.lower() == "":
-            break
-        
-        else:
-            choice = get_choice("Is there a link for the store? Type 1 for yes, and 2 for no: ", 1, 2)
-            
-            if choice == 1:
-                store_url = input("URL: ")
-            
-                if store_url.strip() == "":
-                    print("URL cannot be blank")
-                    continue
-            else:
-                store_url = "No URL"
-            
-            figure_details["websites"][store_name] = store_url
-    
-    websites_str = '; '.join([f"{store}: {url}" for store, url in figure_details["websites"].items()])
+    stores = enter_stores()
     
     rows = data.load_all_figures()
-    rows.append([figure_details["name"], figure_details["release_date"], figure_details["status"], figure_details["tier"], websites_str])
+    rows.append([figure_details["name"], figure_details["release_date"], figure_details["status"], figure_details["tier"], stores])
     data.save_all_figures(rows)
         
     print(f"Added: {figure_details['name']}")
